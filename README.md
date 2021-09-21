@@ -1,2 +1,3 @@
 # python3
-Machine Learning
+### Using the python constructs the neural networks 
+### Grouping the images into serval categories by CNN  
