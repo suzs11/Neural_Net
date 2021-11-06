@@ -66,7 +66,7 @@ else:
 np.random.shuffle(x_train)
 np.random.shuffle(x_test)
 
-x_train, x_test = x_train / 255.0, x_test / 255.0
+
 print("x_train.shape", x_train.shape)
 x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)  # 给数据增加一个维度，使数据和网络结构匹配
 x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
