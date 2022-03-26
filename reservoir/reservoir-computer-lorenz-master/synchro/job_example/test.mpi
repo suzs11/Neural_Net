@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH -J FIRE
+#SBATCH -p normal
+#SBATCH -N 1
+#SBATCH -n 32
+#SBATCH -o logs/%j.loop
+#SBATCH -e logs/%j.loop
+#SBATCH --comment=WRF
+
+echo "SLURM_JOB_NODELIST=${SLURM_JOB_NODELIST}"
+echo "SLURM_NODELIST=${SLURM_NODELIST}"
+
+
+
+#export LD_LIBRARY_PATH=/opt/gridview/slurm17/lib/:$LD_LIBRARY_PATH
+
+#export I_MPI_PMI_LIBRARY=/opt/gridview/slurm17/lib/libpmi.so
+#export I_MPI_PMI_LIBRARY=/opt/gridview/slurm17/lib/libpmi2.so
+
+time srun --mpi=pmi2 ./fire_openmpi_slurm 960000
+date
+

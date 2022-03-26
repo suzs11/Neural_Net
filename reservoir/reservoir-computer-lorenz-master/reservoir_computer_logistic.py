@@ -9,19 +9,19 @@ plt.rcParams['axes.unicode_minus']=False # 用来正常显示负号
 #from data_Chua import get_chua_data #This model needs to be trained 1000 times 
 #from data_Chen import get_chen_data
 #from data_Liu import get_liu_data
-from data_logistic import get_logisticmap_data
+from data_L import get_logistic_data
 
 # This file contains the ReservoirComputer class and necessary helper functions
 # The main method at the bottom contains a demo of the code, run this file in the terminal to check it out
 
 class ReservoirComputer():
-    def __init__(self, dim_system=1, dim_reservoir=500, sigma=0.1, rho=1.1,density=0.05):
+    def __init__(self, dim_system=1, dim_reservoir=500, sigma=0.1, rho=0.95,density=0.05):
         self.dim_reservoir = dim_reservoir
         self.dim_system = dim_system
         self.r_state = np.zeros(dim_reservoir)
         self.A = generate_reservoir(dim_reservoir, rho, density)
-        self.W_in = 2 * sigma * (np.random.rand(dim_reservoir, 1100) - 0.5)
-        self.W_out = np.zeros((1100, dim_reservoir))
+        self.W_in = 2 * sigma * (np.random.rand(dim_reservoir, 1) - 0.5)
+        self.W_out = np.zeros((1, dim_reservoir))
 
     def advance(self, u):
         """
@@ -49,7 +49,7 @@ class ReservoirComputer():
         """
         R = np.zeros((self.dim_reservoir, traj.shape[0]))
         for i in range(traj.shape[0]):
-            R[:, i] = self.r_state
+            R[:,i] = self.r_state
             x = traj[i]
             self.advance(x)
         self.W_out = lin_reg(R, traj, 0.0001)
@@ -195,7 +195,7 @@ if __name__ == "__main__":
     #train_data, val_data = get_chua_data(dt=dt)
     #train_data, val_data = get_chen_data(dt=dt)
     #train_data, val_data = get_liu_data(dt=dt)
-    train_data, val_data = get_logisticmap_data()
+    train_data, val_data = get_logistic_data()
     network = ReservoirComputer(dim_reservoir=500, density=0.25)
     network.train(train_data)
     predicted = network.predict(val_data.shape[0])

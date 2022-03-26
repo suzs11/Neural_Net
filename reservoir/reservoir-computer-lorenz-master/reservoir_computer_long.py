@@ -5,10 +5,10 @@ from scipy.signal import argrelextrema
 plt.rcParams['axes.unicode_minus']=False # 用来正常显示负号
 
 #from data import get_lorenz_data
-from data_R import get_rossler_data
+#from data_R import get_rossler_data
 #from data_Chua import get_chua_data #This model needs to be trained 1000 times 
 #from data_Chen import get_chen_data
-#from data_Liu import get_liu_data
+from data_Liu import get_liu_data
 
 # This file contains the ReservoirComputer class and necessary helper functions
 # The main method at the bottom contains a demo of the code, run this file in the terminal to check it out
@@ -127,7 +127,7 @@ def tanh(x):
 
 ### functions for plotting results ###
 
-def compare(predicted, actual, t, fontsize = 10):
+def compare(predicted, actual, t, fontsize = 16):
     """
     Plot a comparison between a predicted trajectory and actual trajectory.
     
@@ -153,12 +153,14 @@ def compare(predicted, actual, t, fontsize = 10):
         plt.plot(t, predicted[:, i],'m--', label='predict')
         #plt.axis('tight')
         plt.subplots_adjust(hspace=.001)
+        plt.xlim((0,45))
+        #plt.ylim((-1,1))
         plt.ylabel(var, fontsize=18)
-        plt.xticks(fontsize=fontsize)
+        plt.xticks([],fontsize=fontsize)
         plt.yticks(fontsize=fontsize)
         plt.legend(loc="upper right")
         i += 1
-    plt.axis('tight')
+    plt.xticks(np.arange(0,45,step=10),fontsize=fontsize)
     plt.xlabel(r"$Time$", fontsize=18)
     plt.show()
     input("Press enter to exit")
@@ -185,8 +187,8 @@ def plot_poincare(predicted, actual):
     
     plt.scatter(zpai, zpai1, label="actual")
     plt.scatter(zpi, zpi1,label="predict")
-    plt.xlabel("$z_i$")
-    plt.ylabel("$z_{i+1}$")
+    plt.xlabel("$z_i$",fontsize=18)
+    plt.ylabel("$z_{i+1}$",fontsize=18)
     plt.title("Poincare Plot")
     plt.legend(loc="upper right")
     plt.show()
@@ -196,10 +198,10 @@ def plot_poincare(predicted, actual):
 if __name__ == "__main__":
     dt = 0.02
     #train_data, val_data = get_lorenz_data(dt=dt)
-    train_data, val_data = get_rossler_data(dt=dt)
+    #train_data, val_data = get_rossler_data(dt=dt)
     #train_data, val_data = get_chua_data(dt=dt)
     #train_data, val_data = get_chen_data(dt=dt)# There are some question
-    #train_data, val_data = get_liu_data(dt=dt)
+    train_data, val_data = get_liu_data(dt=dt)
 
     network = ReservoirComputer(dim_reservoir=500, density=0.25)
     network.train(train_data)

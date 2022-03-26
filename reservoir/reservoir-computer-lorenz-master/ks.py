@@ -56,16 +56,23 @@ for n in range(1, nmax+1):
         u = np.real(np.fft.ifft(v))
         uu = np.append(uu, np.array([u]), axis=0)
         tt = np.hstack((tt, t))
+
+
 # plot
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 tt, x = np.meshgrid(tt, x)
 surf = ax.plot_surface(tt, x, uu.transpose(), cmap=cm.coolwarm, linewidth=0, antialiased=False)
 fig.colorbar(surf, shrink=0.5, aspect=5)
-plt.show()
-# plot
+
+
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 surf = plt.contour(tt, x, uu.transpose(), 31, extend='both')
 fig.colorbar(surf, shrink=0.5, aspect=5)
+
+fig3 = plt.figure(figsize=(12,4))
+levels = np.arange(0,10,0.1)
+ks = plt.contourf(uu.transpose(), origin='lower', cmap=plt.cm.jet)
+fig3.colorbar(ks)
 plt.show()

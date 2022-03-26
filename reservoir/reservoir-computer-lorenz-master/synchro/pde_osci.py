@@ -27,5 +27,6 @@ plt.figure()
 extent = [0,1,0,3]
 levels = np.arange(0,10,0.1)
 plt.contourf(U, levels, origin='lower', extent=extent, cmap=plt.cm.jet)
+plt.colorbar()
 plt.show()
 

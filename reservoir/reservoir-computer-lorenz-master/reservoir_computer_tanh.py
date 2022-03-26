@@ -4,9 +4,9 @@ import networkx as nx
 from scipy.signal import argrelextrema
 plt.rcParams['axes.unicode_minus']=False # 用来正常显示负号
 
-from data import get_lorenz_data
+#from data import get_lorenz_data
 #from data_R import get_rossler_data
-#from data_Chua import get_chua_data #This model needs to be trained 1000 times 
+from data_Chua import get_chua_data #This model needs to be trained 1000 times 
 #from data_Chen import get_chen_data #This model has some questions
 #from data_Liu import get_liu_data
 #from data_L import get_logistic_data
@@ -123,7 +123,7 @@ def tanh(x):
 
 ### functions for plotting results ###
 
-def compare(predicted, actual, t, fontsize = 10):
+def compare(predicted, actual, t, fontsize = 16):
     """
     Plot a comparison between a predicted trajectory and actual trajectory.
     
@@ -148,11 +148,13 @@ def compare(predicted, actual, t, fontsize = 10):
         plt.plot(t, actual[:, i], label='actual')
         plt.plot(t, predicted[:, i],'r--', label='predict')
         plt.subplots_adjust(hspace=.001)
+        plt.xlim((0,45))
         plt.ylabel(var, fontsize=fontsize)
-        plt.xticks(fontsize=fontsize)
+        plt.xticks([],fontsize=fontsize)
         plt.yticks(fontsize=fontsize)
         plt.legend(loc='upper right')
         i += 1
+    plt.xticks(np.arange(0,45,step=10),fontsize=fontsize)
     plt.xlabel("Time", fontsize=fontsize)
     plt.show()
     input("Press enter to exit")
@@ -178,8 +180,8 @@ def plot_poincare(predicted, actual):
     
     plt.scatter(zpai, zpai1, label="actual")
     plt.scatter(zpi, zpi1,label="predict")
-    plt.xlabel("$z_i$")
-    plt.ylabel("$z_{i+1}$")
+    plt.xlabel("$z_i$",fontsize=18)
+    plt.ylabel("$z_{i+1}$",fontsize=18)
     plt.title("Poincare Plot")
     plt.legend()
     plt.show()
@@ -188,9 +190,9 @@ def plot_poincare(predicted, actual):
 
 if __name__ == "__main__":
     dt = 0.02
-    train_data, val_data = get_lorenz_data(dt=dt)
+    #train_data, val_data = get_lorenz_data(dt=dt)
     #train_data, val_data = get_rossler_data(dt=dt)
-    #train_data, val_data = get_chua_data(dt=dt)
+    train_data, val_data = get_chua_data(dt=dt)
     #train_data, val_data = get_chen_data(dt=dt)
     #train_data, val_data = get_liu_data(dt=dt)
     #train_data, val_data = get_logistic_data()

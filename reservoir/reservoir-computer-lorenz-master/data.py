@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def RK4(f, r0, tf, dt):
     """Fourth-order Runge-Kutta integrator.
@@ -59,3 +60,13 @@ def get_lorenz_data(tf=250, dt=0.02, skip=25, split=0.8):
     val_data = traj[split_num:]
     
     return train_data, val_data
+if __name__=='__main__':
+    rho1 = np.linspace(1,200,400)
+    x = []
+    for rho in rho1:
+        t, traj = generateLorenz((1,1,1), 80, 0.02, 10,rho, 8.0/3)
+        x1=traj[3000:,2]
+        x.append(x1)
+    plt.figure()
+    plt.plot(rho1,x,',r')
+    plt.show()

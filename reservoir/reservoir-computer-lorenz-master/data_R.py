@@ -6,7 +6,7 @@ def RK4(f, r0, tf, dt):
     traj = np.zeros((ts.shape[0], len(r0)))
     traj[0, :] = np.array(r0)
 
-    for i in range(0, ts.shape[0] - 1):
+    for i in range(0, ts.shape[0]-1):
         t = ts[i]
         r = traj[i, :]
 
@@ -31,8 +31,8 @@ def generateRossler(r0, tf, dt, a , b, c):
     return (ts, traj)
 
 
-def get_rossler_data(tf=1000, dt=0.02, skip=25, split=0.8):
-    _, traj = generateRossler((1, 1, 1), tf, dt, 0.2, 0.2, 9.0)
+def get_rossler_data(tf=500, dt=0.02, skip=25, split=0.6):
+    _, traj = generateRossler((1, 1, 1), tf, dt, 0.2, 0.2, 20.0)
 
     skip_steps = int(skip /dt)
     traj = traj[skip_steps:]
@@ -41,4 +41,7 @@ def get_rossler_data(tf=1000, dt=0.02, skip=25, split=0.8):
 
     train_data = traj[:split_num]
     val_data = traj[split_num:]
+    for i in range(3):
+        train_data[:,i] = train_data[:,i]/train_data[:,i].max()
+        val_data[:,i] = val_data[:,i]/val_data[:,i].max()
     return train_data, val_data

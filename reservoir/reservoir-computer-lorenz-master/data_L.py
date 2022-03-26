@@ -4,10 +4,8 @@ import matplotlib.ticker as ticker
 
 def generateLogistic():
     mu = np.arange(3.8, 4, 0.001)
-    x = 0.3
-    N  = 2000
-    traj = []
-    nu = []
+    x, N = 0.3, 2000
+    nu, traj = [], []
     for i in range(N):
         x = mu * x * (1 - x)
         if i > 1800:
@@ -17,13 +15,25 @@ def generateLogistic():
     nu = np.asarray(nu)
     return (nu, traj)
 
-def get_logistic_data(split=0.2):
-    nu, traj = generateLogistic()
-    split_num = int(split * traj.shape[1])
+def logistic():
+    mu1, N, x = 3.8, 10500, 0.5
+    traj = []
+    for i in range(500):
+        x = mu1*x*(1 - x)
+    for k in range(N-500):
+        x = mu1*x*(1-x)
+        traj.append(x)
+    traj = np.array(traj)
+    return traj
 
-    train_data = traj[:,:split_num]
-    val_data = traj[:,split_num:]
 
+
+def get_logistic_data(split=0.8):
+    traj = logistic()
+    split_num = int(split * traj.shape[0])
+
+    train_data = traj[:split_num]
+    val_data = traj[split_num:]
     return train_data ,val_data
 
 
